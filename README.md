@@ -19,6 +19,15 @@ $ make -f Makefile.numpy
 $ python3 darknet_npinput.py
 ```
 
-References
+# How to Release with darknet-numpy
+
+Additional library, `libdarknet_numpy.so`, will be created. You need to
+install it with `libdarknet.so` together.
+
+# Example
+
+Please refer to `darknet_npinput.py`.
+
+# References
 
 * https://gitlab.com/DT42/galaxy42/dt42-trainer/issues/30

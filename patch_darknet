@@ -1,0 +1,16 @@
+#!/bin/bash
+# Add "numpy array as input" support source and example into Darknet.
+
+DARKNET_DIR="$1"
+
+if [ "$DARKNET_DIR" = "" ] || \
+   [ "$DARKNET_DIR" = "-h" ] || \
+   [ "$DARKNET_DIR" = "--help" ]; then
+    echo "Usage: ./patch_darknet <darknet-dirpath>"
+fi
+
+echo -n "Copy numpy support into Darknet ($1)..."
+cp src/image_numpy.c ${DARKNET_DIR}/src
+cp Makefile.numpy ${DARKNET_DIR}
+cp darknet_npinput.py ${DARKNET_DIR}
+echo "done"

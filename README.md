@@ -1,4 +1,4 @@
-Make Darknet to support numpy array as input.
+# darknet-numpy: Make Darknet to support numpy array as input
 
 To prevent us from maintaining a diverged repo, we make numpy support
 as independent plugin w/o touching Darknet's source codes.

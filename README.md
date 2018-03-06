@@ -1,5 +1,8 @@
 Make Darknet to support numpy array as input.
 
+To prevent us from maintaining a diverged repo, we make numpy support
+as independent plugin w/o touching Darknet's source codes.
+
 # How to Use
 
 ```
@@ -15,3 +18,7 @@ $ make  # use -j <cpu-number> to speedup compilation
 $ make -f Makefile.numpy
 $ python3 darknet_npinput.py
 ```
+
+References
+
+* https://gitlab.com/DT42/galaxy42/dt42-trainer/issues/30

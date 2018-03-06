@@ -3,6 +3,9 @@
 To prevent us from maintaining a diverged repo, we make numpy support
 as independent plugin w/o touching Darknet's source codes.
 
+Note: I will try to send merge request to upstream. If it is accepted,
+this repository will be retired.
+
 # How to Use
 
 ```

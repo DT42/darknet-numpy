@@ -169,7 +169,7 @@ if __name__ == "__main__":
         b"/usr/share/dlmodels/tinyyolovoc-20170816/tiny-yolo-voc.cfg",
         b"/usr/share/dlmodels/tinyyolovoc-20170816/tiny-yolo-voc.weights",
         0)
-    meta = load_meta(b"/usr/share/dlmodels/tinyyolovoc-20170816//voc.data")
+    meta = load_meta(b"/usr/share/dlmodels/tinyyolovoc-20170816/voc.data")
 
     print("===== default loading image =====")
     r = detect(net, meta, b"data/dog.jpg")

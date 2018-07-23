@@ -10,7 +10,7 @@ this repository will be retired.
 
 ```
 $ git clone https://github.com/pjreddie/darknet
-$ git clone https://gitlab.com/DT42/marvin42/darknet-numpy
+$ git clone https://github.com/DT42/darknet-numpy
 $ cd darknet-numpy
 $ ./patch_darknet ../darknet
 $ cd ../darknet
@@ -29,8 +29,4 @@ install it with `libdarknet.so` together.
 
 # Example
 
-Please refer to `darknet_npinput.py`.
-
-# References
-
-* https://gitlab.com/DT42/galaxy42/dt42-trainer/issues/30
+Please refer to `darknet_npinput.py` and `darknet_npinput_rpi.py`.

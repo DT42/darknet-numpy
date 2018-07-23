@@ -1,7 +1,10 @@
-from ctypes import *
+#!/usr/bin/python3
+
 import math
 import random
 import time
+
+from ctypes import *
 from datetime import datetime
 
 import cv2
@@ -39,7 +42,7 @@ class METADATA(Structure):
                 ("names", POINTER(c_char_p))]
 
 
-lib = CDLL("./libdarknet.so", RTLD_GLOBAL)
+lib = CDLL("/usr/lib/libdarknet.so", RTLD_GLOBAL)
 lib.network_width.argtypes = [c_void_p]
 lib.network_width.restype = c_int
 lib.network_height.argtypes = [c_void_p]
@@ -100,12 +103,10 @@ predict_image.restype = POINTER(c_float)
 network_detect = lib.network_detect
 network_detect.argtypes = [c_void_p, IMAGE, c_float, c_float, c_float, POINTER(BOX), POINTER(POINTER(c_float))]
 
-libnp = CDLL("./libdarknet_numpy.so", RTLD_GLOBAL)
+libnp = CDLL("/usr/lib/libdarknet_numpy.so", RTLD_GLOBAL)
 ndarray_image = libnp.ndarray_to_image
 ndarray_image.argtypes = [POINTER(c_ubyte), POINTER(c_long), POINTER(c_long)]
 ndarray_image.restype = IMAGE
-
-nnp_initialize = lib.nnp_initialize
 
 
 def classify(net, meta, im):
@@ -164,9 +165,11 @@ def nparray_to_image(img):
 
 
 if __name__ == "__main__":
-    net = load_net(b"cfg/tiny-yolo-voc.cfg", b"tiny-yolo-voc.weights", 0)
-    meta = load_meta(b"cfg/voc.data")
-    nnp_initialize()
+    net = load_net(
+        b"/usr/share/dlmodels/tinyyolovoc-20170816/tiny-yolo-voc.cfg",
+        b"/usr/share/dlmodels/tinyyolovoc-20170816/tiny-yolo-voc.weights",
+        0)
+    meta = load_meta(b"/usr/share/dlmodels/tinyyolovoc-20170816//voc.data")
 
     print("===== default loading image =====")
     r = detect(net, meta, b"data/dog.jpg")

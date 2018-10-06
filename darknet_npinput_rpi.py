@@ -103,10 +103,25 @@ predict_image.restype = POINTER(c_float)
 network_detect = lib.network_detect
 network_detect.argtypes = [c_void_p, IMAGE, c_float, c_float, c_float, POINTER(BOX), POINTER(POINTER(c_float))]
 
-libnp = CDLL("/usr/lib/libdarknet_numpy.so", RTLD_GLOBAL)
-ndarray_image = libnp.ndarray_to_image
-ndarray_image.argtypes = [POINTER(c_ubyte), POINTER(c_long), POINTER(c_long)]
-ndarray_image.restype = IMAGE
+
+def nparray_to_image(arr):
+    """Convert nparray to Darknet image struct.
+    Args:
+        arr: nparray containing source image in BGR color model.
+
+    Returns:
+        Darknet image struct, whose data is a C array
+        containing flatten image in BGR color model.
+    """
+    arr = arr.transpose(2,0,1)
+    c = arr.shape[0]
+    h = arr.shape[1]
+    w = arr.shape[2]
+    arr = (arr/255.0).flatten()
+    data = c_array(c_float, arr)
+    im = IMAGE(w, h, c, data)
+    rgbgr_image(im)
+    return im
 
 
 def classify(net, meta, im):
@@ -153,15 +168,8 @@ def detect_np(net, meta, np_img, thresh=.5, hier_thresh=.5, nms=.45):
             if probs[j][i] > 0:
                 res.append((meta.names[i], probs[j][i], (boxes[j].x, boxes[j].y, boxes[j].w, boxes[j].h)))
     res = sorted(res, key=lambda x: -x[1])
-    free_image(im)
     free_ptrs(cast(probs, POINTER(c_void_p)), num)
     return res
-
-
-def nparray_to_image(img):
-    data = img.ctypes.data_as(POINTER(c_ubyte))
-    image = ndarray_image(data, img.ctypes.shape, img.ctypes.strides)
-    return image
 
 
 if __name__ == "__main__":
@@ -179,3 +187,4 @@ if __name__ == "__main__":
     im = cv2.imread("data/dog.jpg")
     r = detect_np(net, meta, im)
     print(r)
+    print([(i[0].decode('utf-8'), i[1], i[2]) for i in r])
